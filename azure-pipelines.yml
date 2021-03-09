@@ -59,23 +59,6 @@ stages:
     - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
       displayName: 'Upload package'
       artifact: drop
-- script: |
-    pip install setup
-    pip install -r $(projectRoot)/requirements.txt
-    pip install pytest
-    pytest Tests/unit_tests --junitxml=$(System.DefaultWorkingDirectory)/TestResults/test-results-unit.xml
-    pip install pycmd
-    py.cleanup Tests/
-  displayName: 'Run unit tests'
-
-- task: PublishTestResults@2
-  inputs:        
-    searchFolder: $(System.DefaultWorkingDirectory)
-    testResultsFiles: '**/test-*.xml'
-  displayName: 'Publish test results'
-
-- publish: $(System.DefaultWorkingDirectory)/Tests
-  artifact: tests
 
 - stage: Deploy
   displayName: 'Deploy Web App'
